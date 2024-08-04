@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orchestrator Node</title>
+    <script>
+        function startSSE() {
+            if (typeof(EventSource) !== "undefined") {
+                var source = new EventSource("/metrics_stream");
+                source.onmessage = function(event) {
+                    var metrics = JSON.parse(event.data);
+                    document.getElementById("mean_latency").innerText = metrics.mean_latency;
+                    document.getElementById("median_latency").innerText = metrics.median_latency;
+                    document.getElementById("min_latency").innerText = metrics.min_latency;
+                    document.getElementById("max_latency").innerText = metrics.max_latency;
+                };
+                source.onerror = function(event) {
+                    console.error("EventSource failed:", event);
+                };
+            } else {
+                document.getElementById("metrics").innerText = "Sorry, your browser does not support server-sent events...";
+            }
+        }
+    </script>
+</head>
+<body onload="startSSE()">
+    <h1>Welcome to the Orchestrator Node!</h1>
+    <form action="/publish_testconfig" method="post">
+        <label for="test_type">Test Type</label>
+        <select id = "test_type" name = "test_type" required>
+            <option value="AVALANCHE"> AVALANCHE </option>
+            <option value="TSUNAMI"> TSUNAMI </option>
+        </select>
+        <br><br>
+
+        <label for="test_message_delay">Test Message Delay (seconds):</label>
+        <input type="number" id="test_message_delay" name="test_message_delay" min="0"><br><br>
+        
+        <label for="message_count_per_driver">Number of Tests per driver: </label>
+        <input type="number" id ="message_count_per_driver" name="message_count_per_driver" min="1" required><br><br>
+
+        <button type="submit">Publish Test Config</button>
+    </form>
+
+    <h2>Metrics Summary</h2>
+    <ul id="metrics">
+        <li>Mean Latency: <span id="mean_latency"></span></li>
+        <li>Median Latency: <span id="median_latency"></span></li>
+        <li>Min Latency: <span id="min_latency"></span></li>
+        <li>Max Latency: <span id="max_latency"></span></li>
+    </ul>
+</body>
+</html>

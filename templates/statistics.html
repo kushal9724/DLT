@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Response Time Statistics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 50%;
+            margin: auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Response Time Statistics</h1>
+    <table>
+        <tr>
+            <th>Statistic</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Mean Latency</td>
+            <td>{{ mean_latency }} ms</td>
+        </tr>
+        <tr>
+            <td>Median Latency</td>
+            <td>{{ median_latency }} ms</td>
+        </tr>
+        <tr>
+            <td>Min Latency</td>
+            <td>{{ min_latency }} ms</td>
+        </tr>
+        <tr>
+            <td>Max Latency</td>
+            <td>{{ max_latency }} ms</td>
+        </tr>
+    </table>
+    <!-- Add a button to start the test -->
+    <form action="/start_test" method="post">
+        <button type="submit">Start Test</button>
+    </form>
+    <p>{{ statistic }}</p>
+</body>
+</html>

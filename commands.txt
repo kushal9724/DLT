@@ -1,0 +1,16 @@
+# Example command to create a Kafka topic
+bin/kafka-topics.sh --create --topic register --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+
+bin/kafka-topics.sh --create --topic testconfig --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+bin/kafka-topics.sh --create --topic trigger --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+bin/kafka-topics.sh --create --topic metrics --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+python3 orchestrator_node.py <KAFKA_IP_ADDRESS> <ORCHESTRATOR_NODE_IP_ADDRESS>
+
+python3 driver_node.py <KAFKA_IP_ADDRESS> <ORCHESTRATOR_NODE_IP_ADDRESS>
+
+python3 target_server.py
+
